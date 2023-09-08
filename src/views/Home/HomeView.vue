@@ -17,6 +17,7 @@
     <div class="flex flex-col gap-4 w-full">
 
       <TopProducts />
+      <VisitorsChart />
 
     </div>
   </div>
@@ -25,6 +26,7 @@
 <script setup lang="ts">
 import Summary from './Summary.vue';
 import TopProducts from './TopProducts.vue';
+import VisitorsChart from './VisitorsChart.vue';
 import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24/outline';
 
 
