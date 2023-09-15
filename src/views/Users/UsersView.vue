@@ -1,76 +1,76 @@
 <template>
+  <div class="h-full w-full">
+    <!-- Search Bar -->
+    <div class="flex flex-row items-center lg:justify-start justify-center mb-4 w-full">
+      <input 
+        type="text" 
+        v-model="search" 
+        placeholder="Search"
+        class="border border-main rounded-tl-xl rounded-br-xl rounded-bl rounded-tr p-2"
+        >
+    </div>
 
-<div class="flex flex-row items-center lg:justify-start justify-center mb-4 w-full">
-  <input type="text" v-model="search" placeholder="Search" class="border border-main rounded-tl-xl rounded-br-xl rounded-bl rounded-tr p-2">
-</div>
+    <div class="overflow-scroll overflow-x-hidden h-96 w-full border-main">
 
-  <div class="overflow-scroll h-4/5 border min-w-full border-main">
-    <table class="table-auto">
-    <thead class="bg-light sticky  top-0 text-main">
-      <tr>
-        <th class="p-4 text-left w-max">ID</th>
-        <th class="p-4 text-left w-max">User</th>
-        <th class="p-4 text-left w-max">Email</th>
-        <th class="p-4 text-left w-max">Phone</th>
-        <th class="p-4 text-left w-max">Address</th>
-      </tr>
-    </thead>
+      <!-- Loading Spinner -->
+      <div v-if="loading" class="flex items-center justify-center h-full">
+        <div class="animate-spin rounded-full h-32 w-32 border-4 border-b-0 border-main"></div>
+      </div>
 
-    <tbody class="text-main w-full">
-      <tr v-if="filteredUsers.length === 0">
-        <td class="p-4 w-max">No users found</td>
-      </tr>
+      <!-- No Users Found -->
+      <div 
+        v-if="!filteredUsers.length || !users.length && !loading"
+        class="flex items-center justify-center h-full"
+      >
+        <span class="text-2xl">No users found</span>
+      </div>
 
-      <tr v-else-if="filteredUsers.length" v-for="user in filteredUsers" :key="`${user.id}FILTERED`">
-        <td class="p-4 w-max">{{ user.id }}</td>
-        <td class="p-4 w-max flex items-center justify-center">
-          <img :src="user.image" :alt="user.firstName" class="w-10 h-10 rounded-full">
-          <span>{{ user.firstName + ' ' + user.lastName }}</span>
-        </td>
-        <td class="p-4 w-max">{{ user.email }}</td>
-        <td class="p-4 w-max whitespace-nowrap">{{ user.phone }}</td>
-        <td class="p-4 w-max">{{ user.address.address }}</td>
-      </tr>
+      <table v-else class="table-auto w-full">
+        <thead class="bg-light sticky  top-0 text-main">
+          <tr>
+            <th class="p-4 text-left w-max">ID</th>
+            <th class="p-4 text-left w-max">User</th>
+            <th class="p-4 text-left w-max">Email</th>
+            <th class="p-4 text-left w-max">Phone</th>
+            <th class="p-4 text-left w-max">Address</th>
+          </tr>
+        </thead>
 
-      <tr v-else v-for="user in users" :key="user.id">
-        <td class="p-4 w-max">{{ user.id }}</td>
-        <td class="p-4 w-max flex items-center justify-center">
-          <img :src="user.image" :alt="user.firstName" class="w-10 h-10 rounded-full">
-          <span>{{ user.firstName + ' ' + user.lastName }}</span>
-        </td>
-        <td class="p-4 w-max">{{ user.email }}</td>
-        <td class="p-4 w-max whitespace-nowrap">{{ user.phone }}</td>
-        <td class="p-4 w-max">{{ user.address.address }}</td>
-      </tr>
-    </tbody>
+        <tbody class="text-main w-full p-2">
+          <!-- Filtered Users List -->
+          <UserListItem v-if="filteredUsers.length" v-for="user in filteredUsers" :key="user.id + 'F'" :user="user" />
+          <!-- All Users List -->
+          <UserListItem v-else-if="!filteredUsers.length && !loading" v-for="user in users" :key="user.id" :user="user" />
+        </tbody>
 
-  </table>
+      </table>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import UserListItem from '@/views/Users/UserListItem.vue'
 
-
-const users = ref<any[]>([])
-const search = ref('')
+const users = ref<User[]>([])
+const search = ref<string>('')
+const loading = ref<boolean>(false)
 
 async function getUsers() {
-  const data = await fetch('https://dummyjson.com/users?limit=100')
+  loading.value = true
+  const data = await fetch('https://dummyjson.com/users?limit=100&select=id,firstName,lastName,email,phone,image,address')
   const json = await data.json()
   users.value = json.users
+  loading.value = false
 }
 
 getUsers()
 
 const filteredUsers = computed(() => {
   return users.value.filter(user => {
-    let result = user.firstName.toLowerCase().includes(search.value.toLowerCase())
-    return result
+    return user.firstName.toLowerCase().includes(search.value.toLowerCase())
   })
 })
-
-
 
 
 </script>

@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-row h-screen bg-bg-light lg:p-6 p-2">
+  <div class="flex flex-row min-h-screen bg-bg-light lg:p-4 p-2">
 
     <SideNav />
 
-    <main class="container mx-auto rounded-3xl bg-white lg:py-12 lg:px-24 p-4">
+    <main class="container mx-auto rounded-3xl bg-white lg:py-8 lg:px-16 p-4">
       <Header />
       <RouterView />
     </main>
