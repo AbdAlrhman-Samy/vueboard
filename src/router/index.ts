@@ -3,6 +3,7 @@ import HomeView from '../views/Home/HomeView.vue'
 import OrdersView from '../views/Orders/OrdersView.vue'
 import ProductsView from '../views/Products/ProductsView.vue'
 import UsersView from '../views/Users/UsersView.vue'
+import UserDetailsView from '../views/Users/UserDetailsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,7 +26,12 @@ const router = createRouter({
     {
       path: '/users',
       name: 'users',
-      component: UsersView
+      component: UsersView,
+    },
+    {
+      path: '/users/:id',
+      name: 'user-details',
+      component: UserDetailsView,
     }
   ]
 })
