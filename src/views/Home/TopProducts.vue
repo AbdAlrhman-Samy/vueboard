@@ -14,7 +14,7 @@
       <div class="animate-spin rounded-full h-32 w-32 border-4 border-b-0 border-main"></div>
     </div>
 
-    <ul v-if="topProducts.length && !loading" class="grid lg:grid-cols-2 gap-2 mt-4">
+    <ul v-if="topProducts.length && !loading">
       <ProductItem v-for="(product, index) in topProducts" :key="product.id" :rank="index + 1" :image="product.thumbnail" :name="product.title" :price="product.price" />
     </ul>
 

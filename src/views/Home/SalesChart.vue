@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col w-full lg:h-96">
 
     <h3 class="text-2xl mb-4 font-bold text-main">
-      Daily Users
+      Sales
     </h3>
 
     <div class="h-max w-full grow">
@@ -38,14 +38,21 @@ ChartJS.register(
 )
 
 const data = {
-  labels: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
   datasets: [
     {
-      label: 'Users',
-      backgroundColor: 'rgba(66, 66, 125, 0.05)',
-      borderColor: '#7979B2',
-      data: [4000, 3700, 1900, 4000, 3200, 6400, 4000],
-      fill: true,
+      label: 'Orders',
+      backgroundColor: '#C7F2FFaa',
+      borderColor: '#C7F2FF',
+      data: [4000, 3700, 1900, 4000, 3200, 6400, 11000],
+      pointBackgroundColor: '#42427D',
+    },
+
+    {
+      label: 'Profit',
+      backgroundColor: 'rgba(66, 66, 125, 0.15)',
+      borderColor: '#FFE5EE',
+      data: [2000, 1700, 900, 2000, 1200, 4400, 9000],
       pointBackgroundColor: '#42427D',
     }
   ]
@@ -58,7 +65,7 @@ const options = {
     y: {
       beginAtZero: true,
       ticks: {
-        stepSize: 4000
+        stepSize: 2000
       }
     },
     x: {
