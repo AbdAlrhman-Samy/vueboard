@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { BuildingStorefrontIcon, HomeIcon, UserGroupIcon, ShoppingCartIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline';
+import NavItem from './NavItem.vue';
+</script>
+
 <template>
   <div class="lg:flex flex-col justify-between pl-8 w-1/5 py-8 rounded-xl hidden">
 
@@ -43,10 +48,5 @@
 
   </div>
 </template>
-
-<script setup lang="ts">
-import { BuildingStorefrontIcon, HomeIcon, UserGroupIcon, ShoppingCartIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline';
-import NavItem from './NavItem.vue';
-</script>
 
 <style scoped></style>

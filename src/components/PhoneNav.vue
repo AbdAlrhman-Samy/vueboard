@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { Bars4Icon } from '@heroicons/vue/24/solid';
+
+const routes = [
+  {
+    name: 'Home',
+    path: '/'
+  },
+  {
+    name: 'Users',
+    path: '/users'
+  },
+  {
+    name: 'Products',
+    path: '/products'
+  },
+  {
+    name: 'Orders',
+    path: '/orders'
+  },
+
+]
+
+</script>
+
 <template>
   <Menu as="div" class="lg:hidden relative">
 
@@ -26,31 +52,5 @@
     </transition>
   </Menu>
 </template>
-
-<script setup lang="ts">
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import { Bars4Icon } from '@heroicons/vue/24/solid';
-
-const routes = [
-  {
-    name: 'Home',
-    path: '/'
-  },
-  {
-    name: 'Products',
-    path: '/products'
-  },
-  {
-    name: 'Users',
-    path: '/users'
-  },
-  {
-    name: 'Orders',
-    path: '/orders'
-  },
-
-]
-
-</script>
 
 <style scoped></style>

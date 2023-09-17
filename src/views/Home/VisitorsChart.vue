@@ -1,17 +1,3 @@
-<template>
-  <div class="flex flex-col">
-
-    <h3 class="text-2xl mb-4 font-bold text-main">
-      Daily Users
-    </h3>
-
-    <div class="h-max w-full grow">
-      <Line :data="data" :options="options" />
-    </div>
-
-  </div>
-</template>
-
 <script setup lang="ts">
 import {
   Chart as ChartJS,
@@ -38,7 +24,7 @@ ChartJS.register(
 )
 
 const data = {
-  labels: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+  labels: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
   datasets: [
     {
       label: 'Users',
@@ -83,5 +69,19 @@ const options = {
 
 
 </script>
+
+<template>
+  <div class="flex flex-col">
+
+    <h3 class="mb-4 text-2xl font-bold text-main">
+      Daily Users
+    </h3>
+
+    <div class="w-full h-full grow">
+      <Line :data="data" :options="options" />
+    </div>
+
+  </div>
+</template>
 
 <style scoped></style>

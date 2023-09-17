@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { BellIcon, UserIcon } from '@heroicons/vue/24/solid';
+import PhoneNav from './PhoneNav.vue';
+
+</script>
+
 <template>
   <div class="flex lg:flex-row flex-col-reverse gap-8 justify-between items-center w-full mb-8">
 
@@ -27,12 +33,6 @@
 
   </div>
 </template>
-
-<script setup lang="ts">
-import { BellIcon, UserIcon } from '@heroicons/vue/24/solid';
-import PhoneNav from './PhoneNav.vue';
-
-</script>
 
 <style scoped>
 

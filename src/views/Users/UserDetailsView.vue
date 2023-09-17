@@ -1,74 +1,37 @@
-<template>
-  <div class="flex flex-col items-center justify-center">
-    <h1 class="text-4xl font-bold">
-      User {{ route.params.id }} Details
-    </h1>
-
-    <div class="flex flex-col items-center justify-center">
-      <div v-if="loading" class="flex items-center justify-center animate-pulse">
-        <span class="text-2xl">Loading...</span>
-        
-      </div>
-
-      <div v-else-if="user" class="flex flex-col items-center justify-center gap-4">
-
-        <div>
-          <router-link to="/users" class="text-main hover:text-main-dark">
-            <span class="text-2xl">Back to Users</span>
-          </router-link>
-        </div>
-
-        <img :src="user.image" :alt="user.firstName" class="w-32 h-32 bg-main p-1 rounded-full">
-        <span class="text-2xl">Name: {{ user.firstName + ' ' + user.lastName }}</span>
-        <span class="text-2xl"> Birth Date:
-          {{ user.birthDate }}</span>
-        <span class="text-2xl"> Email:
-          {{ user.email }}</span>
-        <span class="text-2xl"> Phone:
-          {{ user.phone }}</span>
-        <span class="text-2xl"> Address:
-          {{ user.address.address }}</span>
-        <span class="text-2xl"> State:
-          {{ user.address.state }}</span>
-
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
-
-interface UserDetails extends User {
-  address: {
-    address: string;
-    city: string;
-    postalCode: string;
-    state: string;
-  },
-  birthDate: string;
-}
-
-const user = ref<UserDetails | null>(null)
-const loading = ref<boolean>(false)
+import { useFetch } from '../../composables/useFetch'
 
 const route = useRoute()
+const id = route.params.id
 
-watch(() => route.params.id, async (id) => {
-  if (!id) return
-  console.log('id', id)
-  loading.value = true
-  const response = await fetch(`https://dummyjson.com/users/${id}`)
-  const data = await response.json()
-  user.value = data
-  loading.value = false
-},
-  { immediate: true }
-)
+const { data: user, error, isLoading, cancel } = useFetch(`https://dummyjson.com/users/${id}`)
+
+onUnmounted(() => {
+  cancel()
+})
 
 </script>
 
+<template>
+  <div class="flex flex-col items-center justify-center">
+    
+    <div v-if="isLoading" class="flex items-center justify-center w-full my-2 animate-pulse h-96">
+      <span class="text-4xl">Loading...</span>
+    </div>
 
+    <div v-else-if="error" class="flex items-center justify-center animate-pulse">
+      <span class="text-2xl">Error: {{ error }}</span>
+    </div>
 
-<style scoped></style>
+    <pre v-else-if="user" class="max-w-full p-2 my-2 overflow-scroll whitespace-pre rounded bg-bg-light h-96">
+      {{ user }}
+    </pre>
+
+    <RouterLink to="/users" class="px-4 py-2 font-semibold rounded bg-main hover:bg-secondary text-light">
+      Back to All Users
+    </RouterLink>
+
+  </div>
+</template>

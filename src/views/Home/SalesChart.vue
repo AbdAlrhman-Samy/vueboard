@@ -1,17 +1,3 @@
-<template>
-  <div class="flex flex-col w-full lg:h-96">
-
-    <h3 class="text-2xl mb-4 font-bold text-main">
-      Sales
-    </h3>
-
-    <div class="h-max w-full grow">
-      <Line :data="data" :options="options" />
-    </div>
-
-  </div>
-</template>
-
 <script setup lang="ts">
 import {
   Chart as ChartJS,
@@ -65,7 +51,7 @@ const options = {
     y: {
       beginAtZero: true,
       ticks: {
-        stepSize: 2000
+        stepSize: 5000
       }
     },
     x: {
@@ -90,5 +76,19 @@ const options = {
 
 
 </script>
+
+<template>
+  <div class="flex flex-col w-full h-full">
+
+    <h3 class="mb-4 text-2xl font-bold text-main">
+      Sales
+    </h3>
+
+    <div class="w-full h-full grow">
+      <Line :data="data" :options="options" />
+    </div>
+
+  </div>
+</template>
 
 <style scoped></style>

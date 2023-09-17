@@ -1,26 +1,3 @@
-<template>
-  <div 
-    class="flex flex-row items-center gap-4 py-6 px-8 hover:scale-105 transform transition-all duration-200 ease-in-out"
-    :class="computedClasses"
-  >
-    <slot></slot>
-
-    <hgroup class="text-main">
-      <h4 class="text-xl font-bold">
-        {{ props.value }}
-      </h4>
-      <p class="text-xs font-medium">
-        {{ props.title.toUpperCase() }}
-      </p>
-    </hgroup>
-
-    <span class="bg-main text-white font-bold text-xs p-1 rounded-bl-lg rounded-tr-lg rounded-tl rounded-br">
-      {{ props.title === 'orders' ? '+20' : '+$623'  }}
-    </span>
-
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 
@@ -48,6 +25,29 @@ const computedClasses = computed(() => {
 
 
 </script>
+
+<template>
+  <div 
+    class="flex flex-row items-center gap-4 py-6 px-8 hover:scale-105 transform transition-all duration-200 ease-in-out"
+    :class="computedClasses"
+  >
+    <slot></slot>
+
+    <hgroup class="text-main">
+      <h4 class="text-xl font-bold">
+        {{ props.value }}
+      </h4>
+      <p class="text-xs font-medium">
+        {{ props.title.toUpperCase() }}
+      </p>
+    </hgroup>
+
+    <span class="bg-main text-white font-bold text-xs p-1 rounded-bl-lg rounded-tr-lg rounded-tl rounded-br">
+      {{ props.title === 'orders' ? '+20' : '+$623'  }}
+    </span>
+
+  </div>
+</template>
 
 <style scoped>
 

@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
+const props = defineProps({
+  to: {
+    type: String,
+    required: true
+  }
+})
+
+</script>
+
 <template>
   <RouterLink 
     :to="to" 
@@ -10,18 +22,6 @@
     <slot />
   </RouterLink>
 </template>
-
-<script setup lang="ts">
-import { RouterLink } from 'vue-router';
-
-const props = defineProps({
-  to: {
-    type: String,
-    required: true
-  }
-})
-
-</script>
 
 <style scoped>
 
