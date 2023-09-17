@@ -9,11 +9,11 @@ import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-full gap-4 lg:justify-between lg:items-start lg:gap-24 lg:flex-row">
+  <div class="flex flex-col items-center justify-center h-full gap-4 lg:justify-center lg:items-start lg:gap-24 lg:flex-row">
     
 
     <!-- Left Section -->
-    <div class="flex flex-col h-full gap-8 grow">
+    <div class="flex flex-col w-full h-full gap-8 lg:w-3/5 grow">
 
       <!-- Badges -->
       <div class="flex flex-col justify-center gap-2 md:flex-row lg:justify-evenly">
@@ -30,7 +30,7 @@ import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24
     </div>
 
     <!-- Right Section -->
-    <div class="flex flex-col h-full gap-8 lg:gap-4">
+    <div class="flex flex-col w-full h-full gap-8 lg:w-2/5 lg:gap-4">
       <TopProducts />
       <VisitorsChart />
     </div>

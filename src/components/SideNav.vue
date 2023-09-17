@@ -4,7 +4,7 @@ import NavItem from './NavItem.vue';
 </script>
 
 <template>
-  <div class="lg:flex flex-col justify-between pl-8 w-1/5 py-8 rounded-xl hidden">
+  <div class="flex-col justify-between hidden w-1/5 py-8 pl-8 lg:flex rounded-xl">
 
     <div class="flex flex-row items-center gap-4 text-main">
       <BuildingStorefrontIcon class="w-8 h-8" />
@@ -13,7 +13,7 @@ import NavItem from './NavItem.vue';
       </h2>
     </div>
 
-    <nav class="flex flex-col items-center gap-4 w-full">
+    <nav class="flex flex-col items-center w-full gap-4">
 
       <NavItem to="/">
         <HomeIcon class="w-6 h-6" />
@@ -36,7 +36,7 @@ import NavItem from './NavItem.vue';
       </NavItem>
     </nav>
 
-    <p class="text-secondary-soft text-xs">
+    <p class="text-xs text-secondary-soft">
       Made by <br>
       <a href="https://github.com/AbdAlrhman-Samy"
         target="_blank"
