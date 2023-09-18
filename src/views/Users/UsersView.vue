@@ -44,47 +44,6 @@ interface UserResponse {
 </script>
 
 <template>
-  
-
-  <div class="overflow-auto h-96">
-
-    <div v-if="isLoading" class="flex items-center justify-center h-full">
-    <!-- Loading Spinner (Create a reusable loader component) -->
-      <div class="w-32 h-32 border-4 border-b-0 rounded-full animate-spin border-main"></div>
-    </div>
-
-    <div v-if="error" class="flex items-center justify-center h-full">
-    <!-- Error Message -->
-      <h2 class="text-2xl">Error</h2>
-      <pre>
-        {{ error }}
-      </pre>
-    </div>
-
-    <!-- No Users Found -->
-    <div v-if="!computedUsers.length && !isLoading" class="flex items-center justify-center h-full">
-      <span class="text-2xl">No users found</span>
-    </div>
-
-    <table v-else class="w-full table-auto">
-      <thead class="sticky top-0 bg-light text-main">
-        <tr>
-          <th class="p-4 text-left w-max">ID</th>
-          <th class="p-4 text-left w-max">User</th>
-          <th class="p-4 text-left w-max">Email</th>
-          <th class="p-4 text-left w-max">Phone</th>
-          <th class="p-4 text-left w-max">Address</th>
-          <th class="p-4 text-left w-max">Details</th>
-        </tr>
-      </thead>
-
-      <tbody class=" text-main">
-        <!-- Users List -->
-        <UserListItem v-if="computedUsers.length" v-for="user in computedUsers" :key="user.id" :user="user" />
-      </tbody>
-
-    </table>
-  </div>
 
   <!-- Search Bar -->
   <div class="flex flex-col items-center justify-center gap-4 my-4 mb-4 lg:flex-row">
@@ -103,4 +62,45 @@ interface UserResponse {
       </select>
     </div>
   </div>
+  
+    <div v-if="isLoading" class="flex items-center justify-center h-full">
+    <!-- Loading Spinner (Create a reusable loader component) -->
+      <div class="w-32 h-32 border-4 border-b-0 rounded-full animate-spin border-main"></div>
+    </div>
+
+    <div v-if="error" class="flex items-center justify-center h-full">
+    <!-- Error Message -->
+      <h2 class="text-2xl">Error</h2>
+      <pre>
+        {{ error }}
+      </pre>
+    </div>
+
+    <div v-if="!computedUsers.length && !isLoading" class="flex items-center justify-center h-full">
+    <!-- No Users Found -->
+      <span class="text-2xl">No users found</span>
+    </div>
+
+    <div v-else class="overflow-auto">
+      
+    <table  class="w-full h-full table-auto">
+      <thead class="sticky top-0 bg-light text-main">
+        <tr>
+          <th class="p-4 text-left">ID</th>
+          <th class="p-4 text-left">User</th>
+          <th class="p-4 text-left">Email</th>
+          <th class="p-4 text-left">Phone</th>
+          <th class="p-4 text-left">Address</th>
+          <th class="p-4 text-left">Details</th>
+        </tr>
+      </thead>
+
+      <tbody class="text-main">
+        <!-- Users List -->
+        <UserListItem v-if="computedUsers.length" v-for="user in computedUsers" :key="user.id" :user="user" />
+      </tbody>
+
+    </table>
+  
+    </div>
 </template>

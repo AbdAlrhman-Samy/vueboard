@@ -10,10 +10,7 @@ interface Props {
     title: string;
     price: number;
   },
-  key: string | number;
 }
-
-// console.log(props.product);
 
 </script>
 

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="max-h-full overflow-scroll bg-secondary">
     <h1>
       Orders Page
     </h1>

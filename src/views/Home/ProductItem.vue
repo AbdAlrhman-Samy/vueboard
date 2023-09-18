@@ -1,33 +1,23 @@
 <script setup lang="ts">
 
-const props = defineProps({
-  rank: {
-    type: Number,
-    required: true
-  },
-  image: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: String,
-    required: true
-  }
-})
+const props = defineProps<Props>()
+
+interface Props {
+  rank: number
+  name: string
+  price: number | string
+  image: string
+}
 
 </script>
 
 <template>
-  <li class="flex flex-row gap-4 items-center  hover:bg-main-soft hover:bg-opacity-10 transition-all duration-200 ease-in-out rounded-tl-3xl rounded-br-3xl rounded-bl rounded-tr p-2">
-    <span class="text-gray-400 font-bold text-xs p-1">
+  <li class="flex flex-row items-center gap-4 p-2 transition-all duration-200 ease-in-out rounded-tr rounded-bl hover:bg-main-soft hover:bg-opacity-10 rounded-tl-3xl rounded-br-3xl">
+    <span class="p-1 text-xs font-bold text-gray-400">
       {{ props.rank }}
     </span>
 
-    <img :src="props.image" :alt="props.name" class="w-14 h-14 rounded-tl-xl rounded-br-xl rounded-bl rounded-tr" />
+    <img :src="props.image" :alt="props.name" class="rounded-tr rounded-bl w-14 h-14 rounded-tl-xl rounded-br-xl" />
 
     <hgroup>
       <h4 class="text-sm font-bold text-main">
