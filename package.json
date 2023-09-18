@@ -13,12 +13,10 @@
     "@headlessui/tailwindcss": "^0.2.0",
     "@headlessui/vue": "^1.7.16",
     "@heroicons/vue": "^2.0.18",
-    "apexcharts": "^3.42.0",
     "chart.js": "^4.4.0",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
-    "vue-router": "^4.2.4",
-    "vue3-apexcharts": "^1.4.4"
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
