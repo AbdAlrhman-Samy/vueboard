@@ -15,29 +15,36 @@ interface Props {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-between w-full h-full gap-4 p-4 bg-bg-light rounded-tl-2xl rounded-br-2xl">
-    <hgroup>
-      <h2 class="text-xl font-medium text-center text-main">
-        {{ props.product.title }}
-      </h2>
+  <div class="flex flex-row items-center justify-between w-full h-full gap-4 p-4 transition-shadow bg-white rounded-tl-2xl rounded-br-2xl hover:shadow active:shadow">
 
-      <h3 class="text-lg font-bold text-center text-main">
-        ${{ props.product.price }}
-      </h3>
-    </hgroup>
-    <img :src="props.product.thumbnail" :alt="props.product.title" class="object-contain w-32 h-32 border-2 rounded-full border-main" />
+    <img :src="props.product.thumbnail" :alt="props.product.title"
+      class="object-cover w-32 h-full border-2 rounded border-main" />
 
-    <div class="flex items-center justify-between w-full gap-4">
-      <button class="flex items-center justify-center gap-2 p-2 text-center text-red-500 transition-colors border border-red-500 w-fit hover:bg-red-500 hover:text-white rounded-bl-md rounded-tr-md">
-        <TrashIcon class="w-6 h-6" />
-      </button>
 
-      <button class="flex items-center justify-center w-full gap-2 p-2 text-center text-white transition-shadow rounded bg-main hover:shadow-md rounded-tl-md rounded-br-md">
-        <InformationCircleIcon class="w-6 h-6" />
-        View Details
-      </button>
+    <div class="flex flex-col items-start justify-start w-full h-full gap-4">
 
+      <hgroup class="flex flex-col items-start justify-start w-full h-full gap-2">
+        <h2 class="text-lg font-bold text-main">
+          {{ props.product.title }}
+        </h2>
+
+        <p class="text-lg font-medium text-main">
+          ${{ props.product.price }}
+        </p>
+      </hgroup>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-end w-full gap-2">
+        <button
+          class="flex items-center justify-center gap-2 p-2 text-center text-white transition-colors bg-red-500 w-fit rounded-bl-md rounded-tr-md hover:bg-opacity-80 hover:text-white">
+          <TrashIcon class="w-5 h-5" />
+        </button>
+
+        <button
+          class="flex items-center justify-center gap-2 p-2 text-center text-white transition-colors bg-main rounded-tl-md rounded-br-md hover:bg-opacity-80">
+          <InformationCircleIcon class="w-5 h-5" />
+        </button>
+      </div>
     </div>
-
   </div>
 </template>

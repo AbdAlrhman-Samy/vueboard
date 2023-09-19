@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import { onUnmounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { onUnmounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useFetch } from '../../composables/useFetch'
 
 const route = useRoute()
+const router = useRouter()
 const id = route.params.id
 
-const { data: user, error, isLoading, cancel } = useFetch(`https://dummyjson.com/users/${id}`)
+// type <any> because the response is a huge object, and this page wasn't meant to stay anyway
+const { data: user, error, isLoading, cancel } = useFetch<any>(`https://dummyjson.com/users/${id}`)
 
 onUnmounted(() => {
   cancel()
 })
 
+watch(user, () => {
+  if(user.value.message) {
+    router.push('/404')
+  }
+})
+
+
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center">
+  <div class="flex flex-col items-center justify-center h-full">
     
-    <div v-if="isLoading" class="flex items-center justify-center w-full my-2 animate-pulse h-96">
+    <div v-if="isLoading" class="flex items-center justify-center w-full h-full my-2 animate-pulse">
       <span class="text-4xl">Loading...</span>
     </div>
 
@@ -25,7 +34,7 @@ onUnmounted(() => {
       <span class="text-2xl">Error: {{ error }}</span>
     </div>
 
-    <pre v-else-if="user" class="max-w-full p-2 my-2 overflow-scroll whitespace-pre rounded bg-bg-light h-96">
+    <pre v-else-if="user" class="h-full max-w-full p-2 my-2 overflow-auto whitespace-pre rounded bg-bg-light">
       {{ user }}
     </pre>
 

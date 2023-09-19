@@ -17,18 +17,18 @@ const computedUsers = computed(() => {
   if (!users.value) return []
   const usersList = toRaw(users.value.users)
 
-  switch (filter.value.toLocaleLowerCase()) {
+  switch (filter.value) {
     case 'name':
-      return usersList.filter(user => user.firstName.toLowerCase().includes(search.value) || user.lastName.toLowerCase().includes(search.value))
+      return usersList.filter(user => user.firstName.toLowerCase().includes(search.value.toLocaleLowerCase()) || user.lastName.toLowerCase().includes(search.value.toLocaleLowerCase()))
 
     case 'email':
-      return usersList.filter(user => user.email.toLocaleLowerCase().includes(search.value))
+      return usersList.filter(user => user.email.toLocaleLowerCase().includes(search.value.toLocaleLowerCase()))
 
     case 'phone':
-      return usersList.filter(user => user.phone.toLocaleLowerCase().includes(search.value))
+      return usersList.filter(user => user.phone.toLocaleLowerCase().includes(search.value.toLocaleLowerCase()))
 
     case 'address':
-      return usersList.filter(user => user.address.address.toLocaleLowerCase().includes(search.value) )
+      return usersList.filter(user => user.address.address.toLocaleLowerCase().includes(search.value.toLocaleLowerCase()) )
     
     default:
       return usersList
@@ -48,13 +48,16 @@ interface UserResponse {
   <!-- Search Bar -->
   <div class="flex flex-col items-center justify-center gap-4 my-4 mb-4 lg:flex-row">
     <input type="text" v-model="search" placeholder="Search"
-      class="p-2 border rounded-tr rounded-bl border-main rounded-tl-xl rounded-br-xl">
+      class="p-2 font-semibold bg-white border-2 rounded-tr rounded-bl border-main rounded-tl-xl rounded-br-xl disabled:opacity-50 disabled:cursor-not-allowed text-main"
+      >
     
-    <div>
-      <span>
-        Search by:
+    <div class="flex items-center justify-center gap-2">
+      <span class="font-bold text-md text-main">
+        Search By
       </span>
-      <select class="p-2 border rounded-tr rounded-bl border-main rounded-tl-xl rounded-br-xl" v-model="filter">
+      <select 
+      class="p-2 font-semibold bg-white border-2 rounded-tr rounded-bl cursor-pointer border-main rounded-tl-xl rounded-br-xl disabled:opacity-50 disabled:cursor-not-allowed text-main"
+      v-model="filter">
         <option value="name">Name</option>
         <option value="email">Email</option>
         <option value="phone">Phone</option>
@@ -81,7 +84,7 @@ interface UserResponse {
       <span class="text-2xl">No users found</span>
     </div>
 
-    <div v-else class="overflow-auto">
+    <div v-if="computedUsers.length && !isLoading" class="overflow-auto">
       
     <table  class="w-full h-full table-auto">
       <thead class="sticky top-0 bg-light text-main">
