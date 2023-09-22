@@ -1,6 +1,6 @@
 type TopProducts = {
-  id: string;
-  title: string;
-  price: string;
-  thumbnail: string;
+  id: string
+  title: string
+  price: string
+  thumbnail: string
 }

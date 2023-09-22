@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   to: {
@@ -7,15 +7,14 @@ const props = defineProps({
     required: true
   }
 })
-
 </script>
 
 <template>
-  <RouterLink 
-    :to="to" 
-    class="flex flex-row ps-8 items-center gap-4 w-full py-4 hover:text-main"
+  <RouterLink
+    :to="to"
+    class="flex w-full flex-row items-center gap-4 py-4 ps-8 hover:text-main"
     :class="{
-      'bg-white text-main rounded-s-2xl font-semibold': $route.path === to,
+      'rounded-s-2xl bg-white font-semibold text-main': $route.path === to,
       'text-secondary-soft': $route.path !== to
     }"
   >
@@ -23,6 +22,4 @@ const props = defineProps({
   </RouterLink>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

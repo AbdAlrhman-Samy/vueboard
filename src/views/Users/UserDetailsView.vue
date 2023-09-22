@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onUnmounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onUnmounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useFetch } from '../../composables/useFetch'
 
 const route = useRoute()
@@ -15,32 +15,34 @@ onUnmounted(() => {
 })
 
 watch(user, () => {
-  if(user.value.message) {
+  if (user.value.message) {
     router.push('/404')
   }
 })
-
-
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-full">
-    
-    <div v-if="isLoading" class="flex items-center justify-center w-full h-full my-2 animate-pulse">
+  <div class="flex h-full flex-col items-center justify-center">
+    <div v-if="isLoading" class="my-2 flex h-full w-full animate-pulse items-center justify-center">
       <span class="text-4xl">Loading...</span>
     </div>
 
-    <div v-else-if="error" class="flex items-center justify-center animate-pulse">
+    <div v-else-if="error" class="flex animate-pulse items-center justify-center">
       <span class="text-2xl">Error: {{ error }}</span>
     </div>
 
-    <pre v-else-if="user" class="h-full max-w-full p-2 my-2 overflow-auto whitespace-pre rounded bg-bg-light">
+    <pre
+      v-else-if="user"
+      class="my-2 h-full max-w-full overflow-auto whitespace-pre rounded bg-bg-light p-2"
+    >
       {{ user }}
     </pre>
 
-    <RouterLink to="/users" class="px-4 py-2 font-semibold rounded bg-main hover:bg-secondary text-light">
+    <RouterLink
+      to="/users"
+      class="rounded bg-main px-4 py-2 font-semibold text-light hover:bg-secondary"
+    >
       Back to All Users
     </RouterLink>
-
   </div>
 </template>

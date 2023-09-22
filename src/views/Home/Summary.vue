@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-
+import { computed } from 'vue'
 
 const props = defineProps({
   title: {
@@ -10,7 +9,7 @@ const props = defineProps({
   value: {
     type: String,
     required: true
-  },
+  }
 })
 
 const computedClasses = computed(() => {
@@ -18,17 +17,14 @@ const computedClasses = computed(() => {
     'bg-orders': props.title === 'orders',
     'bg-profit': props.title === 'profit',
     'rounded-tl-3xl rounded-br-3xl rounded-bl rounded-tr': props.title === 'orders',
-    'rounded-bl-3xl rounded-tr-3xl rounded-tl rounded-br': props.title === 'profit',
-
+    'rounded-bl-3xl rounded-tr-3xl rounded-tl rounded-br': props.title === 'profit'
   }
 })
-
-
 </script>
 
 <template>
-  <div 
-    class="flex flex-row items-center gap-4 py-6 px-8 hover:scale-105 transform transition-all duration-200 ease-in-out"
+  <div
+    class="flex transform flex-row items-center gap-4 px-8 py-6 transition-all duration-200 ease-in-out hover:scale-105"
     :class="computedClasses"
   >
     <slot></slot>
@@ -42,13 +38,12 @@ const computedClasses = computed(() => {
       </p>
     </hgroup>
 
-    <span class="bg-main text-white font-bold text-xs p-1 rounded-bl-lg rounded-tr-lg rounded-tl rounded-br">
-      {{ props.title === 'orders' ? '+20' : '+$623'  }}
+    <span
+      class="rounded-bl-lg rounded-br rounded-tl rounded-tr-lg bg-main p-1 text-xs font-bold text-white"
+    >
+      {{ props.title === 'orders' ? '+20' : '+$623' }}
     </span>
-
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import SideNav from './components/SideNav.vue';
-import Header from './components/Header.vue';
-
+import SideNav from './components/SideNav.vue'
+import Header from './components/Header.vue'
 </script>
 
 <template>
-  <div class="flex flex-row h-screen p-2 bg-bg-light lg:p-4">
-
+  <div class="flex h-screen flex-row bg-bg-light p-2 lg:p-4">
     <SideNav />
 
-    <main class="container flex flex-col max-w-full p-2 mx-auto bg-white border lg:border-l-0 rounded-3xl lg:py-8 lg:px-16">
+    <main
+      class="container mx-auto flex max-w-full flex-col rounded-3xl border bg-white p-2 lg:border-l-0 lg:px-16 lg:py-8"
+    >
       <Header />
 
-      <div class="flex flex-col overflow-auto grow">
+      <div class="flex grow flex-col overflow-auto">
         <RouterView />
       </div>
-
     </main>
-
   </div>
 </template>

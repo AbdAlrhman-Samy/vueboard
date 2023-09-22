@@ -5,6 +5,8 @@ import ProductsView from '../views/Products/ProductsView.vue'
 import UsersView from '../views/Users/UsersView.vue'
 import UserDetailsView from '../views/Users/UserDetailsView.vue'
 import OrderDetailsView from '../views/Orders/OrderDetailsView.vue'
+import ProductDetailsView from '../views/Products/ProductDetailsView.vue'
+
 import NotFoundView from '@/views/NotFoundView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,14 +32,19 @@ const router = createRouter({
       component: ProductsView
     },
     {
+      path: '/products/:id',
+      name: 'product-details',
+      component: ProductDetailsView
+    },
+    {
       path: '/users',
       name: 'users',
-      component: UsersView,
+      component: UsersView
     },
     {
       path: '/users/:id',
       name: 'user-details',
-      component: UserDetailsView,
+      component: UserDetailsView
     },
     {
       path: '/:pathMatch(.*)*',

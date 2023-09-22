@@ -1,117 +1,143 @@
 <script setup lang="ts">
-import { useFetch } from '@/composables/useFetch';
-import { ref, computed, onBeforeUnmount, toRaw, watch } from 'vue';
-import ProductCard from './ProductCard.vue';
+import { useFetch } from '@/composables/useFetch'
+import { ref, computed, onBeforeUnmount, toRaw, watch } from 'vue'
+import ProductCard from './ProductCard.vue'
 
-const skip = ref<number>(0);
-const filter = ref<string>('');
+const skip = ref<number>(0)
+const filter = ref<string>('')
 
-const { data: products, isLoading, error, cancel, refetch } = useFetch<ProductResponse>(`https://dummyjson.com/products?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`);
-const { data: categories, isLoading: isCategoriesLoading, error: categoriesError, cancel: cancelCategoriesFetch } = useFetch<string[]>(`https://dummyjson.com/products/categories`);
+const {
+  data: products,
+  isLoading,
+  error,
+  cancel,
+  refetch
+} = useFetch<ProductResponse>(
+  `https://dummyjson.com/products?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`
+)
+const {
+  data: categories,
+  isLoading: isCategoriesLoading,
+  error: categoriesError,
+  cancel: cancelCategoriesFetch
+} = useFetch<string[]>(`https://dummyjson.com/products/categories`)
 
 watch(skip, () => {
-  refetch(`https://dummyjson.com/products?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`);
-});
+  refetch(
+    `https://dummyjson.com/products?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`
+  )
+})
 
 watch(filter, () => {
-  if (!products.value) return;
-  skip.value = 0;
-  if (!filter.value) return refetch(`https://dummyjson.com/products?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`);
-  refetch(`https://dummyjson.com/products/category/${filter.value}?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`)
-});
+  if (!products.value) return
+  skip.value = 0
+  if (!filter.value)
+    return refetch(
+      `https://dummyjson.com/products?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`
+    )
+  refetch(
+    `https://dummyjson.com/products/category/${filter.value}?limit=12&skip=${skip.value}&select=id,title,price,thumbnail`
+  )
+})
 
 onBeforeUnmount(() => {
-  cancel();
-  cancelCategoriesFetch();
-});
-
-
+  cancel()
+  cancelCategoriesFetch()
+})
 
 const computedProducts = computed(() => {
-  if (!products.value) return [];
-  const productsList = toRaw(products.value.products);
-  return productsList;
-});
+  if (!products.value) return []
+  const productsList = toRaw(products.value.products)
+  return productsList
+})
 
 const shouldNextBeDisabled = computed(() => {
-  if (!products.value) return true;
-  if (skip.value === products.value.total - products.value.limit) return true; // guess i'm not that bad at math
-});
-
+  if (!products.value) return true
+  if (skip.value === products.value.total - products.value.limit || isLoading.value) return true // guess i'm not that bad at math
+})
 
 interface Product {
-  id: string;
-  title: string;
-  price: number;
-  thumbnail: string;
+  id: string
+  title: string
+  price: number
+  thumbnail: string
 }
 
 interface ProductResponse {
-  products: Product[];
-  total: number;
-  limit: number;
-  skip: number;
+  products: Product[]
+  total: number
+  limit: number
+  skip: number
 }
-
-
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex items-center justify-center h-full">
+  <div v-if="isLoading" class="flex h-full items-center justify-center">
     <!-- Loading Indicator -->
-    <div class="w-32 h-32 border-4 border-b-0 rounded-full animate-spin border-main"></div>
+    <div class="h-32 w-32 animate-spin rounded-full border-4 border-b-0 border-main"></div>
   </div>
 
-  <div v-if="error || categoriesError" class="flex items-center justify-center h-full">
+  <div v-if="error || categoriesError" class="flex h-full items-center justify-center">
     <!-- Error Message -->
-    <h2 class="text-2xl font-bold text-red-500">
-      Error
-    </h2>
+    <h2 class="text-2xl font-bold text-red-500">Error</h2>
 
     <pre class="text-red-500">
       {{ error || categoriesError }}
     </pre>
   </div>
 
-  <div v-if="categories && !isLoading" class="flex items-center justify-center gap-4 my-4 mb-4 lg:flex-row">
+  <div
+    v-if="categories && !isLoading"
+    class="my-4 mb-4 flex items-center justify-center gap-4 lg:flex-row"
+  >
     <!-- Category Filter -->
-    <span class="text-lg font-bold text-main">
-      Category:
-    </span>
+    <span class="text-lg font-bold text-main"> Category: </span>
 
-    <select v-if="categories" :disabled="isCategoriesLoading"
-      class="p-2 font-semibold bg-white border-2 rounded-tr rounded-bl cursor-pointer border-main rounded-tl-xl rounded-br-xl disabled:opacity-50 disabled:cursor-not-allowed text-main"
-      v-model="filter">
+    <select
+      v-if="categories"
+      :disabled="isCategoriesLoading"
+      class="cursor-pointer rounded-bl rounded-br-xl rounded-tl-xl rounded-tr border-2 border-main bg-white p-2 font-semibold text-main disabled:cursor-not-allowed disabled:opacity-50"
+      v-model="filter"
+    >
       <option value="">All</option>
       <option v-for="category in categories" :key="category" :value="category">
         {{ category.charAt(0).toUpperCase() + category.slice(1) }}
       </option>
     </select>
-
   </div>
 
-
   <!-- Products List -->
-  <div v-if="computedProducts.length && !isLoading"
-    class="grid items-center justify-center w-full h-full grid-cols-1 gap-4 p-4 overflow-auto border rounded sm:grid-cols-2 lg:grid-cols-3 bg-bg-light">
+  <div
+    v-if="computedProducts.length && !isLoading"
+    class="grid h-full w-full grid-cols-1 items-center justify-center gap-4 overflow-auto rounded border bg-bg-light p-4 sm:grid-cols-2 lg:grid-cols-3"
+  >
     <ProductCard v-for="product in computedProducts" :key="product.id" :product="product" />
   </div>
 
   <!-- Pagination Controls -->
-  <div class="flex items-center justify-center w-full gap-8 py-4">
-    <button @click="skip -= 12" :disabled="skip === 0"
-      class="px-4 py-1 transition-colors bg-white border-2 rounded border-main text-main rounded-tr-xl rounded-bl-xl disabled:opacity-50 hover:bg-main hover:text-white disabled:cursor-not-allowed">
+  <div class="flex w-full items-center justify-center gap-8 py-4">
+    <button
+      @click="skip -= 12"
+      :disabled="skip === 0 || isLoading"
+      class="rounded rounded-bl-xl rounded-tr-xl border-2 border-main bg-white px-4 py-1 text-main transition-colors hover:bg-main hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+    >
       Prev
     </button>
 
-    <div v-if="!error && !categoriesError && products" class="flex flex-col items-center justify-center">
+    <div
+      v-if="!error && !categoriesError && products"
+      class="flex flex-col items-center justify-center"
+    >
       <span class="text-lg font-bold text-main">
         {{ skip / 12 + 1 }} / {{ Math.ceil(products?.total / 12) }}
       </span>
     </div>
 
-    <button @click="skip += 12" :disabled="shouldNextBeDisabled"
-      class="px-4 py-1 transition-colors bg-white border-2 rounded border-main text-main rounded-tl-xl rounded-br-xl disabled:opacity-50 hover:bg-main hover:text-white disabled:cursor-not-allowed">
+    <button
+      @click="skip += 12"
+      :disabled="shouldNextBeDisabled"
+      class="rounded rounded-br-xl rounded-tl-xl border-2 border-main bg-white px-4 py-1 text-main transition-colors hover:bg-main hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+    >
       Next
     </button>
   </div>

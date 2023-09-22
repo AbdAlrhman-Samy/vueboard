@@ -1,50 +1,55 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import ProductItem from './ProductItem.vue';
+import { ref } from 'vue'
+import ProductItem from './ProductItem.vue'
 
-const topProducts = ref<TopProducts[]>([]);
-const loading = ref<boolean>(false);
+const topProducts = ref<TopProducts[]>([])
+const loading = ref<boolean>(false)
 
 function fetchTopProducts() {
-  loading.value = true;
-  fetch("https://dummyjson.com/products?limit=4&skip=4")
-    .then(res => res.json())
-    .then(data => {
+  loading.value = true
+  fetch('https://dummyjson.com/products?limit=4&skip=4')
+    .then((res) => res.json())
+    .then((data) => {
       console.log(data)
-      topProducts.value = data.products;
-    }).catch(err => {
+      topProducts.value = data.products
+    })
+    .catch((err) => {
       console.log(err)
-    }).finally(() => {
-      loading.value = false;
+    })
+    .finally(() => {
+      loading.value = false
     })
 }
 
-fetchTopProducts();
+fetchTopProducts()
 </script>
 
 <template>
-    <div class="flex flex-row justify-between items-center">
-      <h3 class="text-2xl font-bold text-main">
-        Top Selling Products
-      </h3>
+  <div class="flex flex-row items-center justify-between">
+    <h3 class="text-2xl font-bold text-main">Top Selling Products</h3>
 
-      <RouterLink to="/products" class="text-xs font-medium text-main-soft hover:underline hover:text-main">
-        View All
-      </RouterLink>
-    </div>
+    <RouterLink
+      to="/products"
+      class="text-xs font-medium text-main-soft hover:text-main hover:underline"
+    >
+      View All
+    </RouterLink>
+  </div>
 
+  <div v-if="loading" class="flex h-full items-center justify-center">
+    <div class="h-32 w-32 animate-spin rounded-full border-4 border-b-0 border-main"></div>
+  </div>
 
-    <div v-if="loading" class="flex items-center justify-center h-full">
-      <div class="animate-spin rounded-full h-32 w-32 border-4 border-b-0 border-main"></div>
-    </div>
-
-    <ul v-if="topProducts.length && !loading">
-      <ProductItem v-for="(product, index) in topProducts" :key="product.id" :rank="index + 1" :image="product.thumbnail" :name="product.title" :price="product.price" />
-    </ul>
-
-    
+  <ul v-if="topProducts.length && !loading">
+    <ProductItem
+      v-for="(product, index) in topProducts"
+      :key="product.id"
+      :rank="index + 1"
+      :image="product.thumbnail"
+      :name="product.title"
+      :price="product.price"
+    />
+  </ul>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
