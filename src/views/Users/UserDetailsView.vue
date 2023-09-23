@@ -2,6 +2,7 @@
 import { onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useFetch } from '../../composables/useFetch'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -22,27 +23,22 @@ watch(user, () => {
 </script>
 
 <template>
-  <div class="flex h-full flex-col items-center justify-center">
-    <div v-if="isLoading" class="my-2 flex h-full w-full animate-pulse items-center justify-center">
-      <span class="text-4xl">Loading...</span>
-    </div>
+  <LoadingIndicator :isLoading="isLoading" />
 
-    <div v-else-if="error" class="flex animate-pulse items-center justify-center">
-      <span class="text-2xl">Error: {{ error }}</span>
-    </div>
+  <Error :error="error" />
 
-    <pre
-      v-else-if="user"
-      class="my-2 h-full max-w-full overflow-auto whitespace-pre rounded bg-bg-light p-2"
-    >
+  <pre
+    v-if="user"
+    class="my-2 h-full w-full max-w-6xl overflow-auto whitespace-pre rounded bg-bg-light p-2"
+  >
       {{ user }}
-    </pre>
+    </pre
+  >
 
-    <RouterLink
-      to="/users"
-      class="rounded bg-main px-4 py-2 font-semibold text-light hover:bg-secondary"
-    >
-      Back to All Users
-    </RouterLink>
-  </div>
+  <RouterLink
+    to="/users"
+    class="ml-auto w-fit rounded bg-main px-4 py-2 font-semibold text-light hover:bg-secondary"
+  >
+    Back to All Users
+  </RouterLink>
 </template>

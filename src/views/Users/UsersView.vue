@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, toRaw } from 'vue'
 import UserListItem from '@/views/Users/UserListItem.vue'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import { useFetch } from '../../composables/useFetch'
+import Error from '@/components/Error.vue'
 
 const search = ref<string>('')
 const filter = ref<string>('name')
@@ -51,6 +53,18 @@ const computedUsers = computed(() => {
   }
 })
 
+interface User {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  image: string
+  address: {
+    address: string
+  }
+}
+
 interface UserResponse {
   users: User[]
 }
@@ -80,19 +94,9 @@ interface UserResponse {
     </div>
   </div>
 
-  <div v-if="isLoading" class="flex h-full items-center justify-center">
-    <!-- Loading Spinner (Create a reusable loader component) -->
-    <div class="h-32 w-32 animate-spin rounded-full border-4 border-b-0 border-main"></div>
-  </div>
+  <LoadingIndicator :isLoading="isLoading" />
 
-  <div v-if="error" class="flex h-full items-center justify-center">
-    <!-- Error Message -->
-    <h2 class="text-2xl">Error</h2>
-    <pre>
-        {{ error }}
-      </pre
-    >
-  </div>
+  <Error :error="error" />
 
   <div v-if="!computedUsers.length && !isLoading" class="flex h-full items-center justify-center">
     <!-- No Users Found -->

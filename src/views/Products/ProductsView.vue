@@ -2,6 +2,7 @@
 import { useFetch } from '@/composables/useFetch'
 import { ref, computed, onBeforeUnmount, toRaw, watch } from 'vue'
 import ProductCard from './ProductCard.vue'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 
 const skip = ref<number>(0)
 const filter = ref<string>('')
@@ -72,10 +73,7 @@ interface ProductResponse {
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex h-full items-center justify-center">
-    <!-- Loading Indicator -->
-    <div class="h-32 w-32 animate-spin rounded-full border-4 border-b-0 border-main"></div>
-  </div>
+  <LoadingIndicator :isLoading="isLoading" />
 
   <div v-if="error || categoriesError" class="flex h-full items-center justify-center">
     <!-- Error Message -->

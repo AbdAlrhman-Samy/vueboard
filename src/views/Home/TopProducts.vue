@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ProductItem from './ProductItem.vue'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 
-const topProducts = ref<TopProducts[]>([])
+const topProducts = ref<Product[]>([])
 const loading = ref<boolean>(false)
+
+/**
+ * !: change to use the useFetch composable
+ */
 
 function fetchTopProducts() {
   loading.value = true
-  fetch('https://dummyjson.com/products?limit=4&skip=4')
+  fetch('https://dummyjson.com/products?limit=4&skip=4&select=id,title,price,thumbnail')
     .then((res) => res.json())
     .then((data) => {
       console.log(data)
@@ -22,6 +27,13 @@ function fetchTopProducts() {
 }
 
 fetchTopProducts()
+
+interface Product {
+  id: number
+  title: string
+  price: number
+  thumbnail: string
+}
 </script>
 
 <template>
@@ -36,18 +48,14 @@ fetchTopProducts()
     </RouterLink>
   </div>
 
-  <div v-if="loading" class="flex h-full items-center justify-center">
-    <div class="h-32 w-32 animate-spin rounded-full border-4 border-b-0 border-main"></div>
-  </div>
+  <LoadingIndicator :isLoading="loading" />
 
   <ul v-if="topProducts.length && !loading">
     <ProductItem
       v-for="(product, index) in topProducts"
       :key="product.id"
       :rank="index + 1"
-      :image="product.thumbnail"
-      :name="product.title"
-      :price="product.price"
+      :product="product"
     />
   </ul>
 </template>

@@ -1,7 +1,29 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useFetch } from '@/composables/useFetch'
+import OrderListItem from './OrderListItem.vue'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
+import Error from '@/components/Error.vue'
+
+const { data, isLoading, error } = useFetch<Order>('https://dummyjson.com/carts')
+
+interface Cart {
+  id: number | string
+  userId: number
+  totalQuantity: number
+  discountedTotal: number
+}
+
+interface Order {
+  carts: Cart[]
+}
+</script>
 
 <template>
-  <div class="max-h-full overflow-scroll bg-secondary">
-    <h1>Orders Page</h1>
+  <LoadingIndicator :isLoading="isLoading" />
+
+  <Error :error="error" />
+
+  <div v-if="!isLoading && data" class="flex h-full w-full flex-col gap-4 overflow-auto">
+    <OrderListItem v-for="order in data.carts" :key="order.id" :order="order" />
   </div>
 </template>

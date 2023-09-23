@@ -7,7 +7,7 @@ const props = defineProps<{
 
 <template>
   <tr class="border-b border-b-gray-200 hover:bg-gray-50">
-    <td class="px-2 py-4 text-center">{{ user.id }}</td>
+    <td class="px-2 py-4 text-center text-sm font-semibold text-gray-400">#{{ user.id }}</td>
 
     <td class="whitespace-nowrap px-2 py-4">
       {{ user.firstName + ' ' + user.lastName }}
