@@ -8,7 +8,7 @@ import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24
 
 <template>
   <div
-    class="flex h-full flex-col items-center justify-center gap-4 lg:flex-row lg:items-start lg:justify-center lg:gap-24"
+    class="flex h-full flex-col gap-4 lg:flex-row lg:items-start lg:justify-center lg:gap-24"
   >
     <!-- Left Section -->
     <div class="flex h-full w-full grow flex-col gap-8 lg:w-3/5">
