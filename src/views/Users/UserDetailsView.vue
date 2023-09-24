@@ -4,8 +4,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useFetch } from '../../composables/useFetch'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Error from '@/components/Error.vue'
-import Modal from '@/components/Modal.vue';
-import Button from '@/components/Button.vue';
+import Modal from '@/components/Modal.vue'
+import Button from '@/components/Button.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -31,18 +31,21 @@ watch(user, () => {
 async function deleteUser() {
   isDeleteLoading.value = true
   await fetch(`https://dummyjson.com/products/${id}`, {
-    method: 'DELETE',
-  }).then((res) => {
-    return res.json()
-  }).then((data) => {
-    if (data.isDeleted) isDeleted.value = true
-  }).catch((err) => {
-    console.log(err)
-  }).finally(() => {
-    isDeleteLoading.value = false
+    method: 'DELETE'
   })
+    .then((res) => {
+      return res.json()
+    })
+    .then((data) => {
+      if (data.isDeleted) isDeleted.value = true
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally(() => {
+      isDeleteLoading.value = false
+    })
 }
-
 
 function setIsOpen(value: boolean) {
   isModalOpen.value = value
@@ -54,7 +57,6 @@ function redirect() {
     router.push('/users')
   } else setIsOpen(false)
 }
-
 </script>
 
 <template>
@@ -63,28 +65,29 @@ function redirect() {
   <Error :error="error" />
 
   <Modal :isOpen="isModalOpen" :setIsOpen="setIsOpen" :onClose="redirect">
-
     <template #title>
       <div class="flex items-center gap-2">
-        <h1 class="text-2xl text-main font-semibold">
-          Delete User
-        </h1>
+        <h1 class="text-2xl font-semibold text-main">Delete User</h1>
       </div>
     </template>
 
     <template #content>
-      <p v-if="isDeleted" class="text-main text-base">
-        User has been deleted successfully.
-      </p>
-      <p v-else class="text-main text-base">
+      <p v-if="isDeleted" class="text-base text-main">User has been deleted successfully.</p>
+      <p v-else class="text-base text-main">
         Are you sure you want to delete this user? This action cannot be undone.
       </p>
     </template>
 
     <template #actions>
-      <div class="flex gap-2 justify-end">
+      <div class="flex justify-end gap-2">
         <Button v-if="!isDeleted" variant="secondary" @click="setIsOpen(false)" title="Close" />
-        <Button v-if="!isDeleted" variant="danger" @click="deleteUser" :title="isDeleteLoading? 'Deleting...' : 'Delete'" :disabled="isDeleteLoading" />
+        <Button
+          v-if="!isDeleted"
+          variant="danger"
+          @click="deleteUser"
+          :title="isDeleteLoading ? 'Deleting...' : 'Delete'"
+          :disabled="isDeleteLoading"
+        />
         <router-link v-else to="/users" class="w-fit">
           <Button title="Back To Users" />
         </router-link>
@@ -92,12 +95,15 @@ function redirect() {
     </template>
   </Modal>
 
-
-  <pre v-if="user" class="my-2 h-full w-full max-w-6xl overflow-auto whitespace-pre rounded bg-bg-light p-2">
+  <pre
+    v-if="user"
+    class="my-2 h-full w-full max-w-6xl overflow-auto whitespace-pre rounded bg-bg-light p-2"
+  >
       {{ user }}
-    </pre>
+    </pre
+  >
 
-  <div v-if="!isLoading && user" class="flex gap-4 justify-end">
+  <div v-if="!isLoading && user" class="flex justify-end gap-4">
     <RouterLink to="/users" class="w-fit">
       <Button title="Back To Users" />
     </RouterLink>

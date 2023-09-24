@@ -17,9 +17,7 @@ const route = useRoute()
 
 const id = route.params.id
 
-const { data, isLoading, error, cancel } = useFetch<Product>(
-  `https://dummyjson.com/products/${id}`
-)
+const { data, isLoading, error, cancel } = useFetch<Product>(`https://dummyjson.com/products/${id}`)
 
 onUnmounted(() => {
   if (isLoading.value) cancel()
@@ -40,7 +38,7 @@ function redirect() {
 async function deleteProduct() {
   isDeleteLoading.value = true
   await fetch(`https://dummyjson.com/products/${id}`, {
-    method: 'DELETE',
+    method: 'DELETE'
   })
     .then((res) => {
       return res.json()
@@ -79,18 +77,25 @@ interface Product {
     </template>
 
     <template #content>
-      <p v-if="isDeleted" class="text-main text-base">
+      <p v-if="isDeleted" class="text-base text-main">
         <b>{{ data?.title }}</b> has been deleted successfully.
       </p>
-      <p v-else class="text-main text-base">
-        Are you sure you want to delete <b>{{ data?.title }}</b>? This action cannot be undone.
+      <p v-else class="text-base text-main">
+        Are you sure you want to delete <b>{{ data?.title }}</b
+        >? This action cannot be undone.
       </p>
     </template>
 
     <template #actions>
-      <div class="flex gap-2 justify-end">
+      <div class="flex justify-end gap-2">
         <Button v-if="!isDeleted" variant="secondary" @click="setIsOpen(false)" title="Close" />
-        <Button v-if="!isDeleted" variant="danger" @click="deleteProduct" :title="isDeleteLoading? 'Deleting...' : 'Delete'" :disabled="isDeleteLoading" />
+        <Button
+          v-if="!isDeleted"
+          variant="danger"
+          @click="deleteProduct"
+          :title="isDeleteLoading ? 'Deleting...' : 'Delete'"
+          :disabled="isDeleteLoading"
+        />
         <router-link v-else to="/products" class="w-fit">
           <Button title="Back To Products" />
         </router-link>
@@ -100,10 +105,12 @@ interface Product {
 
   <LoadingIndicator :isLoading="isLoading" />
 
-
   <!-- Product Data -->
-  <div v-if="data && !isLoading" class="flex h-full flex-col items-center justify-between gap-4 lg:flex-row">
-    <div class="flex flex-col lg:w-2/5 gap-4 w-full">
+  <div
+    v-if="data && !isLoading"
+    class="flex h-full flex-col items-center justify-between gap-4 lg:flex-row"
+  >
+    <div class="flex w-full flex-col gap-4 lg:w-2/5">
       <hgroup>
         <p class="text-base font-semibold text-secondary">{{ data.category }} / {{ data.brand }}</p>
         <h1 class="text-2xl font-semibold text-main">{{ data.title }}</h1>
@@ -127,26 +134,32 @@ interface Product {
         <span class="font-semibold text-main"> {{ data.stock }} in stock </span>
       </div>
 
-
-      <div class="flex flex-row items-center gap-2 w-full overflow-auto">
+      <div class="flex w-full flex-row items-center gap-2 overflow-auto">
         <Button title="Delete Product" full variant="danger" @click="setIsOpen(true)" />
         <Button title="Edit Product" full disabled />
         <RouterLink to="/products">
           <Button title="Back" full variant="secondary" />
         </RouterLink>
       </div>
-
     </div>
 
     <div class="flex w-full flex-col items-center justify-center gap-4 lg:w-1/2">
-      <img :src="selectedImage ? selectedImage : initialImage" alt="Product Image"
-        class="h-96 w-full rounded-xl border-2 border-main object-contain" />
+      <img
+        :src="selectedImage ? selectedImage : initialImage"
+        alt="Product Image"
+        class="h-96 w-full rounded-xl border-2 border-main object-contain"
+      />
 
-      <div class="flex flex-row items-center gap-4 w-full overflow-auto lg:justify-center">
-        <img v-for="(image, index) in data.images" :key="index" :src="image" @click="selectedImage = image"
+      <div class="flex w-full flex-row items-center gap-4 overflow-auto lg:justify-center">
+        <img
+          v-for="(image, index) in data.images"
+          :key="index"
+          :src="image"
+          @click="selectedImage = image"
           alt="Product Image"
           class="h-16 w-16 cursor-pointer rounded-lg border-2 object-cover shadow-lg hover:border-main hover:shadow-xl"
-          :class="selectedImage === image ? 'border-main shadow-xl' : 'border-transparent'" />
+          :class="selectedImage === image ? 'border-main shadow-xl' : 'border-transparent'"
+        />
       </div>
     </div>
   </div>

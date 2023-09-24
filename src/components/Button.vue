@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
@@ -18,14 +18,10 @@ const classes = computed(() => {
       return `${base} text-main border-2 border-main hover:bg-main hover:text-light`
   }
 })
-
 </script>
 
 <template>
-  <button 
-    :class="[classes, full ? 'w-full' : '']" 
-    v-bind="$attrs"
-    >
+  <button :class="[classes, full ? 'w-full' : '']" v-bind="$attrs">
     {{ title }}
   </button>
 </template>
