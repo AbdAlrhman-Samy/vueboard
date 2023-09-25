@@ -4,7 +4,7 @@ import Header from './components/Header.vue'
 </script>
 
 <template>
-  <div class="flex h-screen flex-row bg-bg-light p-2 lg:p-4">
+  <div class="flex h-screen w-screen flex-row overflow-hidden bg-bg-light p-2 lg:p-4">
     <SideNav />
 
     <main

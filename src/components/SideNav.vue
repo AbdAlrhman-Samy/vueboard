@@ -11,7 +11,7 @@ import NavItem from './NavItem.vue'
 
 <template>
   <div class="hidden w-1/5 flex-col justify-between rounded-xl py-8 pl-8 lg:flex">
-    <div class="flex flex-row items-center gap-4 text-main">
+    <div class="mr-8 flex flex-row items-center gap-4 text-main">
       <BuildingStorefrontIcon class="h-8 w-8" />
       <h2 class="cursor-default text-2xl font-bold">VueBoard</h2>
     </div>

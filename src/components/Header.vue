@@ -14,7 +14,8 @@ watch(
       if (name === 'home') {
         routeName.value = 'Welcome!'
       } else {
-        routeName.value = name.charAt(0).toUpperCase() + name.slice(1)
+        const adjustedName: string = name.split('-').join(' ')
+        routeName.value = adjustedName.charAt(0).toUpperCase() + adjustedName.slice(1)
       }
     }
   },

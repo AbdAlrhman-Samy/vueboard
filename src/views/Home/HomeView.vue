@@ -7,7 +7,7 @@ import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24
 </script>
 
 <template>
-  <div class="flex h-full flex-col gap-4 lg:flex-row lg:items-start lg:justify-center lg:gap-24">
+  <div class="flex h-full w-full flex-col gap-8 overflow-auto lg:flex-row lg:gap-12">
     <!-- Left Section -->
     <div class="flex h-full w-full grow flex-col gap-8 lg:w-3/5">
       <!-- Badges -->
@@ -29,7 +29,7 @@ import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24
     </div>
 
     <!-- Right Section -->
-    <div class="flex h-full w-full flex-col gap-8 lg:w-2/5 lg:gap-4">
+    <div class="flex h-full w-full flex-col justify-between gap-8 lg:w-2/5 lg:gap-4">
       <TopProducts />
       <VisitorsChart />
     </div>

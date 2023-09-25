@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { BanknotesIcon, ChevronRightIcon, UserIcon } from '@heroicons/vue/24/solid'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<Props>()
+
+const router = useRouter()
 
 const orderStatus = computed(() => {
   switch (status.value) {
@@ -77,6 +80,7 @@ interface Props {
       <!-- Show Order Details -->
       <div class="justify-self-end">
         <button
+          @click="router.push({ name: 'order-details', params: { id: order.id } })"
           class="rounded-full border-2 border-main bg-light p-1 text-main transition-colors hover:bg-main hover:text-light"
         >
           <ChevronRightIcon class="h-4 w-4" />
