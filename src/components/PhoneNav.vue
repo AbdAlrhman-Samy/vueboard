@@ -40,7 +40,7 @@ const routes = [
       >
         <MenuItem v-for="route in routes" :key="route.name" v-slot="{ close }">
           <RouterLink
-            @click="close"
+            @click.capture="close"
             class="font-semibold"
             :class="{
               'text-main': $route.path === route.path,
