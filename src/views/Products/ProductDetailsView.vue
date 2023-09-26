@@ -6,6 +6,8 @@ import { StarIcon } from '@heroicons/vue/24/outline'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Button from '@/components/Button.vue'
 import Modal from '@/components/Modal.vue'
+import Error from '@/components/Error.vue'
+import { useNotificationsStore } from '@/stores/notifications'
 
 const selectedImage = ref<string>('')
 const isModalOpen = ref<boolean>(false)
@@ -16,6 +18,8 @@ const router = useRouter()
 const route = useRoute()
 
 const id = route.params.id
+
+const notifStore = useNotificationsStore()
 
 const { data, isLoading, error, cancel } = useFetch<Product>(`https://dummyjson.com/products/${id}`)
 
@@ -44,7 +48,14 @@ async function deleteProduct() {
       return res.json()
     })
     .then((data) => {
-      if (data.isDeleted) isDeleted.value = true
+      if (data.isDeleted) {
+        isDeleted.value = true
+        notifStore.addNotification({
+          id: Math.floor(Math.random() * 1000),
+          text: `PRODUCTS: ${data.title} has been deleted successfully.`,
+          date: data.deletedOn
+        })
+      }
     })
     .catch((err) => {
       console.log(err)
@@ -104,6 +115,8 @@ interface Product {
   </Modal>
 
   <LoadingIndicator :isLoading="isLoading" />
+
+  <Error :error="error" />
 
   <!-- Product Data -->
   <div

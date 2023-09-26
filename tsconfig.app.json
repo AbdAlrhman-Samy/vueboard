@@ -8,7 +8,7 @@
     "src/**/*.js",
     "src/**/*.jsx",
     "src/**/*.json",
-    "src/**/*.d.ts",
+    "src/**/*.d.ts"
     ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {

@@ -6,6 +6,7 @@ import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Error from '@/components/Error.vue'
 import Modal from '@/components/Modal.vue'
 import Button from '@/components/Button.vue'
+import { useNotificationsStore } from '@/stores/notifications'
 
 const route = useRoute()
 const router = useRouter()
@@ -14,6 +15,8 @@ const id = route.params.id
 const isModalOpen = ref<boolean>(false)
 const isDeleteLoading = ref<boolean>(false)
 const isDeleted = ref<boolean>(false)
+
+const notifStore = useNotificationsStore()
 
 // type <any> because the response is a huge object, and this page wasn't meant to stay anyway
 const { data: user, error, isLoading, cancel } = useFetch<any>(`https://dummyjson.com/users/${id}`)
@@ -30,14 +33,21 @@ watch(user, () => {
 
 async function deleteUser() {
   isDeleteLoading.value = true
-  await fetch(`https://dummyjson.com/products/${id}`, {
+  await fetch(`https://dummyjson.com/users/${id}`, {
     method: 'DELETE'
   })
     .then((res) => {
       return res.json()
     })
     .then((data) => {
-      if (data.isDeleted) isDeleted.value = true
+      if (data.isDeleted) {
+        isDeleted.value = true
+        notifStore.addNotification({
+          id: Math.floor(Math.random() * 1000),
+          text: `USERS: ${data.firstName + ' ' + data.lastName} has been deleted successfully.`,
+          date: data.deletedOn
+        })
+      }
     })
     .catch((err) => {
       console.log(err)

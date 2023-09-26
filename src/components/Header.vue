@@ -3,6 +3,7 @@ import { BellIcon, UserIcon } from '@heroicons/vue/24/solid'
 import PhoneNav from './PhoneNav.vue'
 import { useRoute } from 'vue-router'
 import { ref, watch } from 'vue'
+import Notifications from './Notifications.vue'
 
 const route = useRoute()
 const routeName = ref<string>('')
@@ -32,18 +33,10 @@ watch(
     </h1>
 
     <div class="flex flex-row items-center gap-4">
-      <button
-        class="relative flex flex-row items-center rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main hover:shadow"
-      >
-        <BellIcon class="h-6 w-6" />
-        <span
-          class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-main font-bold outline outline-4 outline-white"
-        >
-        </span>
-      </button>
+      <Notifications />
 
       <button
-        class="flex flex-row items-center rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main hover:shadow"
+        class="flex flex-row items-center rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main hover:shadow-inner"
       >
         <UserIcon class="h-6 w-6" />
       </button>

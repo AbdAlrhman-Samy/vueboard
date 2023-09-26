@@ -23,29 +23,27 @@ const routes = [
 </script>
 
 <template>
-  <Menu as="div" class="relative lg:hidden">
+  <Menu as="button" v-slot="{ open }" class="lg:hidden">
     <MenuButton>
       <Bars4Icon
-        class="h-14 w-14 rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main hover:shadow"
+        class="h-14 w-14 rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main ui-open:shadow-inner"
       />
     </MenuButton>
 
-    <transition
-      enter-active-class="transition duration-100 ease-out"
-      enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-75 ease-out"
-      leave-from-class="transform scale-100 opacity-100"
-      leave-to-class="transform scale-95 opacity-0"
-    >
+    <div v-show="open">
+      <!-- Menu doesn't automatically close on Firefox, a bug within HeadlessUI -->
+      <!-- https://github.com/tailwindlabs/headlessui/issues/2546 -->
+
       <MenuItems
+        static
         class="absolute z-10 flex flex-col items-center justify-center gap-4 rounded-b-3xl rounded-tr-3xl bg-white px-8 py-4 shadow-lg"
       >
         <MenuItem v-for="route in routes" :key="route.name" v-slot="{ close }">
           <RouterLink
             @click="close"
+            class="font-semibold"
             :class="{
-              'font-semibold text-main': $route.path === route.path,
+              'text-main': $route.path === route.path,
               'text-secondary-soft': $route.path !== route.path
             }"
             :to="route.path"
@@ -54,8 +52,6 @@ const routes = [
           </RouterLink>
         </MenuItem>
       </MenuItems>
-    </transition>
+    </div>
   </Menu>
 </template>
-
-<style scoped></style>

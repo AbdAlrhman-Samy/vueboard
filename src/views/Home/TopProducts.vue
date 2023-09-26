@@ -15,7 +15,6 @@ function fetchTopProducts() {
   fetch('https://dummyjson.com/products?limit=4&skip=4&select=id,title,price,thumbnail')
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       topProducts.value = data.products
     })
     .catch((err) => {

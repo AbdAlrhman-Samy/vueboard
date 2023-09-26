@@ -4,6 +4,7 @@ import Error from '@/components/Error.vue'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Modal from '@/components/Modal.vue'
 import { useFetch } from '@/composables/useFetch'
+import { useNotificationsStore } from '@/stores/notifications'
 import { onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -14,6 +15,8 @@ const id = route.params.id
 const isModalOpen = ref<boolean>(false)
 const isDeleteLoading = ref<boolean>(false)
 const isDeleted = ref<boolean>(false)
+
+const notifStore = useNotificationsStore()
 
 function setIsOpen(value: boolean) {
   isModalOpen.value = value
@@ -34,7 +37,14 @@ async function deleteOrder() {
       return res.json()
     })
     .then((data) => {
-      if (data.isDeleted) isDeleted.value = true
+      if (data.isDeleted) {
+        isDeleted.value = true
+        notifStore.addNotification({
+          id: Math.floor(Math.random() * 1000),
+          text: `ORDERS: #${data.id} has been deleted.`,
+          date: data.deletedOn
+        })
+      }
     })
     .catch((err) => {
       console.log(err)
