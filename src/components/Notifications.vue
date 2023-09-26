@@ -1,13 +1,20 @@
 <script lang="ts" setup>
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { BellIcon } from '@heroicons/vue/24/solid'
 import { useNotificationsStore } from '../stores/notifications'
 import { storeToRefs } from 'pinia'
 import Button from './Button.vue'
+import Modal from './Modal.vue'
+import { ref } from 'vue'
 
 const store = useNotificationsStore()
 
 const { notifications } = storeToRefs(store)
+
+const isModalOpen = ref<boolean>(false)
+
+function setIsModalOpen(value: boolean) {
+  isModalOpen.value = value
+}
 
 const adjustedDate = (date: Date) => {
   const adjustedDate = new Date(date)
@@ -22,28 +29,30 @@ const adjustedDate = (date: Date) => {
 </script>
 
 <template>
-  <Popover class="relative">
-    <PopoverButton
-      class="flex flex-row items-center rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main hover:shadow-inner ui-open:shadow-inner md:relative"
+  <button
+    @click="isModalOpen = true"
+    class="relative flex flex-row items-center rounded-bl rounded-br-xl rounded-tl-xl rounded-tr bg-light p-4 text-main hover:shadow-inner ui-open:shadow-inner"
+  >
+    <BellIcon class="h-6 w-6" />
+    <span
+      class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-main text-xs font-bold text-white outline outline-4 outline-white"
     >
-      <BellIcon class="h-6 w-6" />
-      <span
-        class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-main text-xs font-bold text-white outline outline-4 outline-white"
-      >
-        {{ store.notificationsCount }}
-      </span>
-    </PopoverButton>
+      {{ store.notificationsCount }}
+    </span>
+  </button>
 
-    <PopoverPanel
-      class="absolute z-10 flex w-64 flex-col gap-2 rounded-xl bg-white p-4 shadow-lg md:right-0 md:w-96"
-    >
-      <div
+  <Modal :isOpen="isModalOpen" :setIsOpen="setIsModalOpen" @close="setIsModalOpen(false)">
+    <template v-slot:title>
+      <h1 class="text-2xl font-semibold text-main">Notifications</h1>
+    </template>
+
+    <template v-slot:content>
+      <h4
         v-if="!notifications.length"
-        class="w-full whitespace-nowrap text-center font-bold text-main"
+        class="w-full whitespace-nowrap text-center text-2xl text-gray-300"
       >
-        <span>¯\_(ツ)_/¯</span>
-        <p>No Notifications</p>
-      </div>
+        ¯\_(ツ)_/¯
+      </h4>
 
       <ul v-else class="flex max-h-96 w-full flex-col gap-2 overflow-auto">
         <li
@@ -65,8 +74,14 @@ const adjustedDate = (date: Date) => {
           />
         </li>
       </ul>
+    </template>
 
-      <Button v-if="notifications.length" full title="Mark all as read" @click="store.$reset()" />
-    </PopoverPanel>
-  </Popover>
+    <template v-slot:actions>
+      <div class="flex flex-row justify-end gap-2">
+        <Button variant="secondary" title="Close" @click="setIsModalOpen(false)" />
+        <Button v-if="notifications.length" title="Mark all as read" @click="store.$reset()" />
+      </div>
+    </template>
+
+  </Modal>
 </template>

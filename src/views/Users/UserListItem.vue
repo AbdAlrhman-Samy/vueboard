@@ -3,6 +3,17 @@ import { InformationCircleIcon } from '@heroicons/vue/24/solid'
 const props = defineProps<{
   user: User
 }>()
+
+interface User {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  address: {
+    address: string
+  }
+}
 </script>
 
 <template>

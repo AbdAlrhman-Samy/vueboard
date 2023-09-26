@@ -44,7 +44,7 @@ async function deleteUser() {
         isDeleted.value = true
         notifStore.addNotification({
           id: Math.floor(Math.random() * 1000),
-          text: `USERS: ${data.firstName + ' ' + data.lastName} has been deleted successfully.`,
+          text: `USERS: ${data.firstName + ' ' + data.lastName} has been deleted.`,
           date: data.deletedOn
         })
       }

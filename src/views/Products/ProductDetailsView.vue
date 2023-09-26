@@ -52,7 +52,7 @@ async function deleteProduct() {
         isDeleted.value = true
         notifStore.addNotification({
           id: Math.floor(Math.random() * 1000),
-          text: `PRODUCTS: ${data.title} has been deleted successfully.`,
+          text: `PRODUCTS: ${data.title} has been deleted.`,
           date: data.deletedOn
         })
       }

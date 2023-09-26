@@ -21,7 +21,9 @@ export const useNotificationsStore = defineStore('notifications', {
 
   getters: {
     notificationsCount: (state) => state.notifications.length
-  }
+  },
+
+  persist: true
 })
 
 interface Notification {
