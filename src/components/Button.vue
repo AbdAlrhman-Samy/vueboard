@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const classes = computed(() => {
-  const base = `px-2 py-1 h-full rounded-tl-lg rounded-br-lg rounded-sm uppercase text-sm font-semibold w-fit transition-colors disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:select-none disabled:hover:bg-transparent`
+  const base = `px-2 py-1 h-fit rounded-tl-lg rounded-br-lg rounded-sm uppercase text-sm font-semibold w-fit transition-colors disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:select-none disabled:hover:bg-transparent`
   switch (props.variant) {
     case 'secondary':
       return `${base} text-secondary border-2 border-secondary hover:bg-secondary hover:text-light`

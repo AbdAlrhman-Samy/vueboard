@@ -39,7 +39,7 @@ interface Props {
       <Button
         @click="router.push({ name: 'product-details', params: { id: props.product.id } })"
         title=""
-        class="ml-auto h-fit w-fit"
+        class="ml-auto"
       >
         <InformationCircleIcon class="h-6 w-6" />
       </Button>
