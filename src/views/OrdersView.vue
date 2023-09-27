@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFetch } from '@/composables/useFetch'
-import OrderListItem from './OrderListItem.vue'
+import OrderListItem from '@/components/Orders/OrderListItem.vue'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Error from '@/components/Error.vue'
 

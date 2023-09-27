@@ -23,5 +23,6 @@ const classes = computed(() => {
 <template>
   <button :class="[classes, full ? 'w-full' : '']">
     {{ title }}
+    <slot></slot>
   </button>
 </template>

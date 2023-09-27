@@ -1,5 +1,6 @@
 import { ref, type Ref } from 'vue'
 
+// Maybe split this into useProducts, useUsers, etc. instead?
 export const useFetch = <T>(url: string): Response<T> => {
   const data = ref<any>(null)
   const error = ref<T | null>(null)

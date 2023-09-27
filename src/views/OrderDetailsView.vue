@@ -28,6 +28,7 @@ function redirect() {
   } else setIsOpen(false)
 }
 
+// Looks ugly, should be refactored to its own composable maybe?
 async function deleteOrder() {
   isDeleteLoading.value = true
   await fetch(`https://dummyjson.com/carts/${id}`, {

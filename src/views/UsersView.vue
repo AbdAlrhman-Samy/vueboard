@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, toRaw } from 'vue'
-import UserListItem from '@/views/Users/UserListItem.vue'
+import { useFetch } from '@/composables/useFetch'
+import UserListItem from '@/components/Users/UserListItem.vue'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
-import { useFetch } from '../../composables/useFetch'
 import Error from '@/components/Error.vue'
 
 const search = ref<string>('')
@@ -18,9 +18,11 @@ const {
 )
 
 onUnmounted(() => {
+  // Not sure if this is needed or not (React useEffect PTSD)
   cancel()
 })
 
+// Maybe move it to a helper.js file?
 const computedUsers = computed(() => {
   if (!users.value) return []
   const usersList = toRaw(users.value.users)
@@ -28,23 +30,23 @@ const computedUsers = computed(() => {
   switch (filter.value) {
     case 'name':
       return usersList.filter(
-        (user) =>
+        (user: User) =>
           user.firstName.toLowerCase().includes(search.value.toLocaleLowerCase()) ||
           user.lastName.toLowerCase().includes(search.value.toLocaleLowerCase())
       )
 
     case 'email':
-      return usersList.filter((user) =>
+      return usersList.filter((user: User) =>
         user.email.toLocaleLowerCase().includes(search.value.toLocaleLowerCase())
       )
 
     case 'phone':
-      return usersList.filter((user) =>
+      return usersList.filter((user: User) =>
         user.phone.toLocaleLowerCase().includes(search.value.toLocaleLowerCase())
       )
 
     case 'address':
-      return usersList.filter((user) =>
+      return usersList.filter((user: User) =>
         user.address.address.toLocaleLowerCase().includes(search.value.toLocaleLowerCase())
       )
 

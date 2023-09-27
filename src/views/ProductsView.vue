@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { useFetch } from '@/composables/useFetch'
 import { ref, computed, onBeforeUnmount, toRaw, watch } from 'vue'
-import ProductCard from './ProductCard.vue'
+import { useFetch } from '@/composables/useFetch'
+import ProductCard from '@/components/Products/ProductCard.vue'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
+import Error from '@/components/Error.vue'
 
 const skip = ref<number>(0)
 const filter = ref<string>('')
 
+// This kinda looks like a mess
+// NEEDS REFACTORING
 const {
   data: products,
   isLoading,
@@ -75,19 +78,9 @@ interface ProductResponse {
 <template>
   <LoadingIndicator :isLoading="isLoading" />
 
-  <div v-if="error || categoriesError" class="flex h-full items-center justify-center">
-    <!-- Error Message -->
-    <h2 class="text-2xl font-bold text-red-500">Error</h2>
+  <Error :error="error" />
 
-    <pre class="text-red-500">
-      {{ error || categoriesError }}
-    </pre>
-  </div>
-
-  <div
-    v-if="categories && !isLoading"
-    class="my-4 mb-4 flex items-center justify-center gap-4 lg:flex-row"
-  >
+  <div v-if="categories" class="my-4 mb-4 flex items-center justify-center gap-4 lg:flex-row">
     <!-- Category Filter -->
     <span class="text-lg font-bold text-main"> Category: </span>
 

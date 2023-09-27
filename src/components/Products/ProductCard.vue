@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { InformationCircleIcon } from '@heroicons/vue/24/outline'
 import { useRouter } from 'vue-router'
+import { InformationCircleIcon } from '@heroicons/vue/24/outline'
+import Button from '../Button.vue'
 
 const router = useRouter()
 
@@ -35,13 +36,13 @@ interface Props {
         <p class="text-lg font-medium text-main">${{ props.product.price }}</p>
       </hgroup>
 
-      <!-- Action Buttons -->
-      <button
+      <Button
         @click="router.push({ name: 'product-details', params: { id: props.product.id } })"
-        class="self-end rounded-br-md rounded-tl-md border-2 border-main p-1 text-main transition-colors hover:bg-main hover:text-light"
+        title=""
+        class="ml-auto h-fit w-fit"
       >
         <InformationCircleIcon class="h-6 w-6" />
-      </button>
+      </Button>
     </div>
   </div>
 </template>

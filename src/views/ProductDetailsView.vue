@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { onUnmounted, ref, computed } from 'vue'
-import { useFetch } from '@/composables/useFetch'
 import { useRoute, useRouter } from 'vue-router'
+import { useFetch } from '@/composables/useFetch'
+import { useNotificationsStore } from '@/stores/notifications'
 import { StarIcon } from '@heroicons/vue/24/outline'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Button from '@/components/Button.vue'
 import Modal from '@/components/Modal.vue'
 import Error from '@/components/Error.vue'
-import { useNotificationsStore } from '@/stores/notifications'
 
 const selectedImage = ref<string>('')
 const isModalOpen = ref<boolean>(false)

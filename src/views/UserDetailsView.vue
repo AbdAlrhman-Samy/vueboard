@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useFetch } from '../../composables/useFetch'
+import { useNotificationsStore } from '@/stores/notifications'
+import { useFetch } from '@/composables/useFetch'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import Error from '@/components/Error.vue'
 import Modal from '@/components/Modal.vue'
 import Button from '@/components/Button.vue'
-import { useNotificationsStore } from '@/stores/notifications'
 
 const route = useRoute()
 const router = useRouter()
 const id = route.params.id
 
+// Delete Modal is used multiple times, should probably be its own component
 const isModalOpen = ref<boolean>(false)
 const isDeleteLoading = ref<boolean>(false)
 const isDeleted = ref<boolean>(false)
@@ -31,6 +32,7 @@ watch(user, () => {
   }
 })
 
+// Should probably define these functions in a seperate file
 async function deleteUser() {
   isDeleteLoading.value = true
   await fetch(`https://dummyjson.com/users/${id}`, {
@@ -71,7 +73,6 @@ function redirect() {
 
 <template>
   <LoadingIndicator :isLoading="isLoading" />
-
   <Error :error="error" />
 
   <Modal :isOpen="isModalOpen" :setIsOpen="setIsOpen" :onClose="redirect">
@@ -113,11 +114,11 @@ function redirect() {
     </pre
   >
 
-  <div v-if="!isLoading && user" class="flex justify-end gap-4">
+  <div v-if="(!isLoading && user) || error" class="flex justify-end gap-4">
     <RouterLink to="/users" class="w-fit">
       <Button title="Back To Users" />
     </RouterLink>
 
-    <Button title="Delete User" variant="danger" @click="setIsOpen(true)" />
+    <Button title="Delete User" variant="danger" @click="setIsOpen(true)" :disabled="error" />
   </div>
 </template>

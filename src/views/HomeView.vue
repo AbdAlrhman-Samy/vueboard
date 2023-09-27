@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import SalesChart from './SalesChart.vue'
-import Summary from './Summary.vue'
-import TopProducts from './TopProducts.vue'
-import VisitorsChart from './VisitorsChart.vue'
+import SalesChart from '@/components/Home/SalesChart.vue'
+import Summary from '@/components/Home/Summary.vue'
+import TopProducts from '@/components/Home/TopProducts.vue'
+import VisitorsChart from '@/components/Home/VisitorsChart.vue'
 import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
   <div class="flex h-full w-full flex-col gap-8 overflow-auto lg:flex-row lg:gap-12">
     <!-- Left Section -->
-    <div class="flex h-full w-full grow flex-col gap-8 lg:w-3/5">
-      <!-- Badges -->
+    <div class="flex h-full w-full flex-col justify-between gap-8 lg:w-3/5">
       <div class="flex flex-col justify-center gap-2 p-4 md:flex-row lg:justify-between">
         <Summary title="orders" value="23,789">
           <ClipboardDocumentListIcon
@@ -24,7 +23,6 @@ import { ClipboardDocumentListIcon, CurrencyDollarIcon } from '@heroicons/vue/24
         </Summary>
       </div>
 
-      <!-- Sales Chart -->
       <SalesChart />
     </div>
 

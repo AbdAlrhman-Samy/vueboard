@@ -82,6 +82,5 @@ const adjustedDate = (date: Date) => {
         <Button v-if="notifications.length" title="Mark all as read" @click="store.$reset()" />
       </div>
     </template>
-
   </Modal>
 </template>

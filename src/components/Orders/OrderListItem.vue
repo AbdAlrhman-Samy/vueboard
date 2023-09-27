@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { BanknotesIcon, ChevronRightIcon, UserIcon } from '@heroicons/vue/24/solid'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { BanknotesIcon, ChevronRightIcon, UserIcon } from '@heroicons/vue/24/solid'
 
 const props = defineProps<Props>()
 
